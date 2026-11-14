@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette - Warm Romantic Tones */
+  --color-cream: #fdf8f5;
+  --color-blush: #ffe4e6;
+  --color-rose-light: #fbcfe8;
+  --color-rose: #f472b6;
+  --color-rose-dark: #db2777;
+  --color-rose-deep: #9d174d;
+  --color-warm-white: #fefcfb;
+  --color-text-primary: #4a2c2a;
+  --color-text-secondary: #7a4a48;
+  --color-text-muted: #a8807d;
+  --color-gold: #f5c542;
+  --color-gold-light: #fde68a;
+  --color-paper: #faf5f0;
+  --color-ink: #2d1b1a;
+
+  /* Font families */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.2s; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.3s; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.4s; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.5s; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.6s; }
+.reveal-stagger.visible > *:nth-child(7) { transition-delay: 0.7s; }
+.reveal-stagger.visible > *:nth-child(8) { transition-delay: 0.8s; }
+
+.reveal-stagger.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-stagger > * {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-blush);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-rose);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-rose-dark);
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 3px solid var(--color-rose);
+  outline-offset: 2px;
+}
+
+/* Button press feedback */
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Music player vinyl rotation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vinyl-spin {
+  animation: spin 3s linear infinite;
+  animation-play-state: paused;
+}
+
+.vinyl-spin.playing {
+  animation-play-state: running;
+}
+
+/* Floating hearts background */
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) scale(1);
+    opacity: 0;
+  }
+}
+
+.floating-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--color-rose);
+  animation: floatUp 8s ease-in-out infinite;
+}
+
+/* Gift voucher flip animation */
+.voucher-inner {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  min-height: 380px;
+  perspective: 1000px;
+}
+
+.voucher-front {
+  overflow: visible;
+}
+
+.voucher-flipped .voucher-inner {
+  transform: rotateY(180deg);
+}
+
+.voucher-front,
+.voucher-back {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+}
+
+.voucher-back {
+  transform: rotateY(180deg);
+}
+
+/* Aesthetic dashed border for voucher front */
+.voucher-front {
+  background: linear-gradient(135deg, #fdf8f5 0%, #ffe4e6 100%);
+  border: none;
+  position: relative;
+}
+
+.voucher-front::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 1.5rem;
+  background: linear-gradient(45deg, 
+    rgba(251, 207, 232, 0.8), 
+    rgba(244, 114, 182, 0.6), 
+    rgba(253, 230, 138, 0.8), 
+    rgba(244, 114, 182, 0.6),
+    rgba(251, 207, 232, 0.8)
+  );
+  background-size: 200% 200%;
+  animation: borderFlow 4s ease infinite;
+  z-index: -1;
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+.voucher-front::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 1.25rem;
+  border: 2px dashed;
+  border-image: linear-gradient(45deg, #fbcfe8, #f472b6, #fde68a, #f472b6) 1;
+  background: linear-gradient(135deg, #fdf8f5 0%, #ffe4e6 100%);
+  z-index: -2;
+}
+
+@keyframes borderFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Timeline line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-rose-light), var(--color-rose), var(--color-rose-light));
+  transform: translateX(-50%);
+}
+
+@media (max-width: 640px) {
+  .timeline::before {
+    left: 24px;
+  }
+}
+
+/* Hero gradient animation */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-gradient {
+  background: linear-gradient(-45deg, 
+    var(--color-cream), 
+    var(--color-blush), 
+    var(--color-rose-light), 
+    var(--color-cream));
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+/* Counter number animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.counter-number {
+  animation: countUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* Letter paper texture */
+.letter-paper {
+  background: var(--color-paper);
+  background-image: 
+    repeating-linear-gradient(
+      var(--color-rose-light) 0px,
+      var(--color-rose-light) 1px,
+      transparent 1px,
+      transparent 32px
+    );
+  box-shadow: 
+    0 10px 40px -10px rgba(219, 39, 119, 0.15),
+    0 2px 10px -2px rgba(219, 39, 119, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Gallery image hover/tap effect */
+.gallery-img {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-img:active,
+.gallery-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(219, 39, 119, 0.3);
+}
+
+/* Touch target sizing */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Safe area padding for notches */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Heart beat animation */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  10% { transform: scale(1.15); }
+  20% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  40% { transform: scale(1); }
+}
+
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Splash screen floating hearts animation */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+  50% { transform: translateY(-20px) rotate(10deg); opacity: 0.8; }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Spotify-style Music Player Animations */
+@keyframes eqBar {
+  0%, 100% { height: 20%; }
+  25% { height: 60%; }
+  50% { height: 40%; }
+  75% { height: 80%; }
+}
+
+.eq-bars {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 20px;
+}
+
+.eq-bars span {
+  width: 3px;
+  background: #1DB954;
+  border-radius: 2px;
+  animation: eqBar 0.8s ease-in-out infinite;
+}
+
+.eq-bars span:nth-child(1) { animation-delay: 0ms; }
+.eq-bars span:nth-child(2) { animation-delay: 100ms; }
+.eq-bars span:nth-child(3) { animation-delay: 200ms; }
+.eq-bars span:nth-child(4) { animation-delay: 300ms; }
+.eq-bars span:nth-child(5) { animation-delay: 150ms; }
+
+/* Progress bar thumb hover effect */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1DB954;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(29, 185, 84, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.6);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1DB954;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(29, 185, 84, 0.4);
+}
+
+/* Custom scrollbar for playlist if needed */
+.music-player-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.music-player-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.music-player-scroll::-webkit-scrollbar-thumb {
+  background: rgba(29, 185, 84, 0.5);
+  border-radius: 2px;
+}
+
+/* Focus visible for music controls */
+.music-control-btn:focus-visible {
+  outline: 2px solid #1DB954;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Green accent color for Spotify feel */
+.text-spotify-green { color: #1DB954; }
+.bg-spotify-green { background-color: #1DB954; }
+.hover\:bg-spotify-green:hover { background-color: #1ed760; }
+.border-spotify-green { border-color: #1DB954; }
